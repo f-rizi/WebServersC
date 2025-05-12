@@ -158,7 +158,7 @@ int main(int argc, char *argv[])
             break;
         }
 
-        pid_t pid = fork();
+        pid_t pid = fork(); // ok
         if (pid < 0)
         {
             perror("fork");
