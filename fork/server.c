@@ -169,7 +169,7 @@ int main(int argc, char *argv[])
             // Child process
             close(server_fd);
             handle_client(client_fd);
-            exit(EXIT_SUCCESS);
+            _exit(EXIT_SUCCESS);
         }
         else
         {
