@@ -1,11 +1,11 @@
 CC = gcc
 CFLAGS = -O2 -Wall
-TARGET = server_fork
+TARGET = server_select
 
 all: $(TARGET)
 
-$(TARGET): fork_server.c
-	$(CC) $(CFLAGS) -o $(TARGET) fork_server.c
+$(TARGET): select_server.c
+	$(CC) $(CFLAGS) -o $(TARGET) select_server.c
 
 run: $(TARGET)
 	./$(TARGET)

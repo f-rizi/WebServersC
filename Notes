@@ -1,0 +1,37 @@
+Benchmark using wrk.
+
+1) Build server
+make clean
+make
+2) Run the server
+./server_fork 8080
+3) Warp up environment
+curl http://localhost:8080 >/dev/null
+4) Run a baseline benchmark
+wrk -t4 -c100 -d30s http://127.0.0.1:8080/
+
+
+Sample of output:
+~/WebServersC/fork$ wrk -t4 -c100 -d30s http://127.0.0.1:8080/
+Running 30s test @ http://127.0.0.1:8080/
+  4 threads and 100 connections
+
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    12.74ms   84.11ms   1.67s    96.54%
+    Req/Sec     2.80k     1.60k    8.10k    70.57%
+  325448 requests in 30.01s, 27.31MB read
+  Socket errors: connect 0, read 325448, write 0, timeout 18
+Requests/sec:  10844.60
+Transfer/sec:      0.91MB
+
+~/WebServersC/select$ wrk -t4 -c100 -d30s http://127.0.0.1:8080/
+Running 30s test @ http://127.0.0.1:8080/
+  4 threads and 100 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     6.61ms   31.88ms 463.06ms   96.25%
+    Req/Sec     4.01k     6.88k   35.65k    84.53%
+  456621 requests in 30.08s, 39.19MB read
+  Socket errors: connect 0, read 456621, write 0, timeout 0
+Requests/sec:  15180.50
+Transfer/sec:      1.30MB
+
