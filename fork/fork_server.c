@@ -20,7 +20,7 @@ static volatile sig_atomic_t keep_running = 1;
 void sigchld_handler(int signo)
 {
     (void)signo;
-    // Reap all exited child processes to prevent zombie processes 
+    // Reap all exited child processes to prevent zombie processes
     // (e.g., after forked clients exit)
     while (waitpid(-1, NULL, WNOHANG) > 0)
     {
@@ -52,7 +52,8 @@ void handle_client(int client_fd)
             "Hello from fork server!\n";
 
         ssize_t written = write(client_fd, resp, strlen(resp));
-        if (written == -1) {
+        if (written == -1)
+        {
             perror("write");
         }
     }
@@ -74,7 +75,7 @@ int main(int argc, char *argv[])
     {
         port = atoi(argv[1]);
 
-        if (port <= 0 || port > 65355)
+        if (port <= 0 || port > 65535)
         {
             fprintf(stderr, "Invalid port: %s\n", argv[1]);
             return EXIT_FAILURE;
@@ -90,7 +91,11 @@ int main(int argc, char *argv[])
     struct sigaction sa = {.sa_handler = sigchld_handler};
     sigemptyset(&sa.sa_mask);
     sa.sa_flags = SA_RESTART;
-    sigaction(SIGCHLD, &sa, NULL);
+    if (sigaction(SIGCHLD, &sa, NULL) == -1)
+    {
+        perror("sigaction(SIGCHLD)");
+        exit(EXIT_FAILURE);
+    }
 
     // Handle SIGINT (Ctrl+C) and SIGTERM to allow graceful shutdown of the server.
     // Without this, the server may terminate abruptly without closing the listening socket properly.
@@ -144,7 +149,12 @@ int main(int argc, char *argv[])
 
     while (keep_running)
     {
-        client_fd = accept(server_fd, (struct sockaddr *)&addr, &addrlen);
+        struct sockaddr_in client_addr;
+        socklen_t client_len = sizeof(client_addr);
+
+        int client_fd = accept(server_fd,
+                               (struct sockaddr *)&client_addr,
+                               &client_len);
 
         if (client_fd < 0)
         {
@@ -158,7 +168,7 @@ int main(int argc, char *argv[])
             break;
         }
 
-        pid_t pid = fork(); // ok
+        pid_t pid = fork();
         if (pid < 0)
         {
             perror("fork");
