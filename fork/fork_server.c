@@ -64,12 +64,10 @@ void handle_client(int client_fd)
 int main(int argc, char *argv[])
 {
     int server_fd;
-    int client_fd;
 
     struct sockaddr_in addr;
 
     int port = DEFAULT_PORT;
-    socklen_t addrlen = sizeof(addr);
 
     if (argc > 1)
     {

@@ -4,8 +4,8 @@ TARGET = server_fork
 
 all: $(TARGET)
 
-$(TARGET): server.c
-	$(CC) $(CFLAGS) -o $(TARGET) server.c
+$(TARGET): fork_server.c
+	$(CC) $(CFLAGS) -o $(TARGET) fork_server.c
 
 run: $(TARGET)
 	./$(TARGET)
