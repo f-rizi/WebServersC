@@ -23,3 +23,15 @@ Running 30s test @ http://127.0.0.1:8080/
   Socket errors: connect 0, read 325448, write 0, timeout 18
 Requests/sec:  10844.60
 Transfer/sec:      0.91MB
+
+~/WebServersC/select$ wrk -t4 -c100 -d30s http://127.0.0.1:8080/
+Running 30s test @ http://127.0.0.1:8080/
+  4 threads and 100 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     6.61ms   31.88ms 463.06ms   96.25%
+    Req/Sec     4.01k     6.88k   35.65k    84.53%
+  456621 requests in 30.08s, 39.19MB read
+  Socket errors: connect 0, read 456621, write 0, timeout 0
+Requests/sec:  15180.50
+Transfer/sec:      1.30MB
+
