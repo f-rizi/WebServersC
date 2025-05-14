@@ -35,3 +35,15 @@ Running 30s test @ http://127.0.0.1:8080/
 Requests/sec:  15180.50
 Transfer/sec:      1.30MB
 
+~/WebServersC/epoll$ wrk -t4 -c100 -d30s http://127.0.0.1:8080/
+Running 30s test @ http://127.0.0.1:8080/
+  4 threads and 100 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     5.28ms   27.02ms 464.86ms   96.77%
+    Req/Sec     4.03k     6.86k   35.49k    83.20%
+  461676 requests in 30.10s, 39.19MB read
+  Socket errors: connect 0, read 461676, write 0, timeout 0
+Requests/sec:  15338.69
+Transfer/sec:      1.30MB
+
+

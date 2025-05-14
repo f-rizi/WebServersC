@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -O2 -Wall
-TARGET = server_fork
+TARGET = fork_server
 
 all: $(TARGET)
 
